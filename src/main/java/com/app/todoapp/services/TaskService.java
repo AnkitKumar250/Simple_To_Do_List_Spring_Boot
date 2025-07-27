@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.app.todoapp.exception.TaskNotFoundException;
 import com.app.todoapp.models.TaskModel;
 import com.app.todoapp.repositories.TaskRepo;
 
@@ -31,18 +32,18 @@ public class TaskService {
     }
 
     public void toggleTask(Long id){
-        TaskModel task = taskRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("invalid task id!"));
+        TaskModel task = taskRepo.findById(id).orElseThrow(() -> new TaskNotFoundException("This task does not exist!"));
         task.setCompleted(!task.isCompleted());
         taskRepo.save(task);
     }
 
  
     public TaskModel getTask(Long id) {
-        return taskRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("invalid task id"));
+        return taskRepo.findById(id).orElseThrow(() -> new TaskNotFoundException("This task does not exist!"));
     }
 
     public void updateTask(Long id, TaskModel updatedTask){
-        TaskModel existingTask = taskRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("invalid task id"));
+        TaskModel existingTask = taskRepo.findById(id).orElseThrow(() -> new TaskNotFoundException("This task does not exist"));
         existingTask.setTitle(updatedTask.getTitle());
         existingTask.setCompleted(updatedTask.isCompleted());
 

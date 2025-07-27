@@ -19,52 +19,51 @@ import com.app.todoapp.services.TaskService;
 @RestController
 @RequestMapping("/tasks/api")
 public class TaskControllerAPI {
-    
-    //private TaskModel taskModel;
+
+    // private TaskModel taskModel;
     private TaskService taskService;
 
-    public TaskControllerAPI(TaskService taskService){
+    public TaskControllerAPI(TaskService taskService) {
         this.taskService = taskService;
     }
 
-    //Get All tasks
+    // Get All tasks
     @GetMapping
-    public List<TaskModel> getAllTasks(){
+    public List<TaskModel> getAllTasks() {
         return taskService.getAllTasks();
-    }  
+    }
 
-    //Get single task by id
+    // Get single task by id
     @GetMapping("/{id}")
-    public TaskModel getTaskDetails(@PathVariable("id") Long id){
+    public TaskModel getTaskDetails(@PathVariable("id") Long id) {
         return taskService.getTask(id);
     }
 
-    //Create a new task
+    // Create a new task
     @PostMapping
-    public String createTask(@RequestBody TaskModel taskModel){
+    public String createTask(@RequestBody TaskModel taskModel) {
         taskService.createTask(taskModel.getTitle());
         return "Task created successfully";
     }
 
-    //update complete task details
+    // update complete task details
     @PutMapping("/{id}/update")
-    public String updateTask(@PathVariable("id") Long id, @RequestBody TaskModel updatedTask){
+    public String updateTask(@PathVariable("id") Long id, @RequestBody TaskModel updatedTask) {
         taskService.updateTask(id, updatedTask);
         return "Task has been updated successfully";
     }
 
-    //Update only status of task from completed to not completed and vice versa
+    // Update only status of task from completed to not completed and vice versa
     @PutMapping("/{id}/toggle")
-    public String toggleTask(@PathVariable("id") Long id){
+    public String toggleTask(@PathVariable("id") Long id) {
         taskService.toggleTask(id);
         return "Task status has been updated";
     }
 
     @DeleteMapping("/{id}/delete")
-        public String deleteTask(@PathVariable("id") Long id){
-            taskService.deleteTask(id);
-            return "task has been deleted successfully";
-        }
-
+    public String deleteTask(@PathVariable("id") Long id) {
+        taskService.deleteTask(id);
+        return "task has been deleted successfully";
+    }
 
 }
