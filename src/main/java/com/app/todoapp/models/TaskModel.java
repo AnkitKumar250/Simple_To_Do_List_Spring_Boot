@@ -15,4 +15,15 @@ public class TaskModel {
 
         private boolean completed;
 
+
+        public TaskModel(Long task_id, String title, boolean completed){
+            this.task_id = task_id;
+            this.title = title;
+            this.completed = completed;
+        }
+
+        public TaskModel(){
+
+        }
+
     }

@@ -35,4 +35,19 @@ public class TaskService {
         task.setCompleted(!task.isCompleted());
         taskRepo.save(task);
     }
+
+ 
+    public TaskModel getTask(Long id) {
+        return taskRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("invalid task id"));
+    }
+
+    public void updateTask(Long id, TaskModel updatedTask){
+        TaskModel existingTask = taskRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("invalid task id"));
+        existingTask.setTitle(updatedTask.getTitle());
+        existingTask.setCompleted(updatedTask.isCompleted());
+
+        taskRepo.save(existingTask);
+    }
+
+    
 }
