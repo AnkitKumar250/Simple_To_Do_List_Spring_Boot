@@ -1,4 +1,4 @@
-package com.app.todoapp.apiDocumentation;
+package com.app.todoapp.config;
 
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;

@@ -4,6 +4,8 @@ package com.app.todoapp.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +23,7 @@ import com.app.todoapp.services.TaskService;
 
 @RestController
 @RequestMapping("/tasks/api")
+@EnableMethodSecurity //enables role based access
 public class TaskControllerAPI {
     
     //private TaskModel taskModel;
@@ -46,6 +49,7 @@ public class TaskControllerAPI {
 
     //Get single task by id
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER')")
 
     //Default response
    /*  public TaskModel getTaskDetails(@PathVariable("id") Long id){
@@ -61,6 +65,7 @@ public class TaskControllerAPI {
 
     //Create a new task
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public String createTask(@RequestBody TaskModel taskModel){
         taskService.createTask(taskModel.getTitle());
         return "Task created successfully";
@@ -68,6 +73,7 @@ public class TaskControllerAPI {
 
     //update complete task details
     @PutMapping("/{id}/update")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateTask(@PathVariable("id") Long id, @RequestBody TaskModel updatedTask){
         taskService.updateTask(id, updatedTask);
         return "Task has been updated successfully";
@@ -75,16 +81,16 @@ public class TaskControllerAPI {
 
     //Update only status of task from completed to not completed and vice versa
     @PutMapping("/{id}/toggle")
+    @PreAuthorize("hasRole('ADMIN')")
     public String toggleTask(@PathVariable("id") Long id){
         taskService.toggleTask(id);
         return "Task status has been updated";
     }
 
     @DeleteMapping("/{id}/delete")
+    @PreAuthorize("hasRole('ADMIN')")
         public String deleteTask(@PathVariable("id") Long id){
             taskService.deleteTask(id);
             return "task has been deleted successfully";
         }
-
-
 }
