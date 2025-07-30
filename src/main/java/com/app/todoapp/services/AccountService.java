@@ -16,8 +16,7 @@ public class AccountService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void registerUser(){
-        Account account = new Account();
+    public void registerUser(Account account){
         if(accountRepo.findByUsername(account.getUsername()).isPresent()){
             throw new RuntimeException("Username already exist");
         }
