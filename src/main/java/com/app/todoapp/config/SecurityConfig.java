@@ -24,7 +24,7 @@ public class SecurityConfig {
     }
 
     //Add users manually (In memory and not in database for now)
-    @Bean
+   /*  @Bean
     public UserDetailsService userDetailsService(){
         UserDetails userDetails1 = User.withUsername("User1")
                                    .password(passwordEncoder().encode("Pass1"))
@@ -39,14 +39,14 @@ public class SecurityConfig {
                                    .roles("ADMIN").build();
 
         return new InMemoryUserDetailsManager(userDetails1, userDetails2, adminDetails);
-    }
+    } */
 
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.csrf(csrfCustomizer -> csrfCustomizer.disable());
         httpSecurity.authorizeHttpRequests(request -> 
-                                           request.requestMatchers("/tasks/welcome").permitAll()
+                                           request.requestMatchers("/tasks/welcome", "/account/api/register").permitAll()
                                            .anyRequest().authenticated());
         httpSecurity.httpBasic(Customizer.withDefaults());
         httpSecurity.sessionManagement(session ->
