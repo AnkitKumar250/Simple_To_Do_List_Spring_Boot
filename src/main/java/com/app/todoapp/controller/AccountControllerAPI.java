@@ -26,4 +26,8 @@ public class AccountControllerAPI {
         return new ResponseEntity<>("User has been registered successfully", HttpStatus.CREATED);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<String> getAccountInfo(@RequestBody Account account){
+        return new ResponseEntity<>(accountService.getAccountInfo(account), HttpStatus.OK);
+    }
 }
